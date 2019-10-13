@@ -1,0 +1,39 @@
+﻿@using KylerAndBrandonCMS2.ViewModels;
+@model PageViewModel
+
+<h1>@Model.Name</h1>
+
+<div>
+    <div class="paragraph">
+        <h2>@Model.Header</h2>
+    </div>
+    @foreach (var thing in Model.contents)
+    {
+        @if (thing.GetType().Equals(typeof(ParagraphItem)))
+        {
+            var thing1 = (ParagraphItem)thing;
+            <div class="paragraph">
+                <h2>@thing1.Title</h2>
+                <p>@thing1.Content</p>
+            </div>
+        }
+
+        @if (thing.GetType().Equals(typeof(ImageItem)))
+        {
+            var thing2 = (ImageItem)thing;
+            <div class="paragraph">
+                <h2>@thing2.Title</h2>
+                @if (thing2.Image != null)
+                {
+                    var img = String.Format("data:image/gif;base64,{0}", thing2.Image);
+                    <img src="@img" class="ImageItemImage" />
+                }
+            </div>
+        }
+
+
+    }
+    <div class="paragraph">
+        <h2>@Model.Footer</h2>
+    </div>
+</div>

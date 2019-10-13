@@ -1,0 +1,16 @@
+﻿@model IEnumerable<Comment>
+<h1>Leave us a comment</h1>
+
+@if (User.Identity.Name != null)
+{
+    @Html.Partial("AddCommentPartial", new Comment())
+
+}
+@foreach (var comment in @Model)
+{
+    <div class="comment">
+        <p>@comment.Id</p>
+        <p>@comment.User</p>
+        <p>@comment.Content</p>
+    </div>
+}

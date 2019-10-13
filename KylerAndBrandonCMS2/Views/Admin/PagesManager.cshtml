@@ -1,0 +1,50 @@
+﻿@model IEnumerable<KylerAndBrandonCMS2.Models.Page>
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService Authorization
+@{
+    var canAdd = (await Authorization.AuthorizeAsync(User, MyIdentityData.CMSPolicy_Add)).Succeeded;
+}
+<h1>PAGE MANAGER</h1>
+
+
+@{ if (canAdd)
+    {
+        <a class="nav-link" asp-action="AddPage">Add A Page</a>
+    }
+}
+
+
+
+<center>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    page name
+                </th>
+                <th>Page Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @{ if (canAdd)
+                            {
+                                <a asp-action="DeletePage" asp-route-id="@item.Id">Delete</a>
+                            }
+                        }
+                        <a asp-controller="admin" asp-action="EditPage" asp-route-pagename="@item.Name">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</center>
+
+
+

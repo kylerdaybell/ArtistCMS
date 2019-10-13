@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Page>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="sidenav">
+    <h2>Pages</h2>
+    @foreach (var item in Model)
+    {
+        <a href="@item.Name">@item.Name</a>
+
+        <!--<a asp-controller="page" asp-action="index" asp-route-pagename="@item.Name">@item.Name</a>-->
+    }
+</div>
+
+<div class="main">
+    <div class="text-center">
+        <h1>SILVERSTONE CMS</h1>
+        <h2>A Home for your ART Content</h2>
+    </div>
+
+            <div class="paragraph">
+                <img src="@ViewData["PictureURL"]" class="ImageItemImage" />
+            </div>
+        
+    </div>

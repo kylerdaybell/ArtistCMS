@@ -1,0 +1,46 @@
+﻿@using KylerAndBrandonCMS2.ViewModels
+@model PageViewModel
+
+<h1>@Model.Name</h1>
+<div>
+    @foreach (var thing in Model.contents)
+    {
+        @if (thing.GetType().Equals(typeof(ParagraphItem)))
+        {
+            var thing1 = (ParagraphItem)thing;
+            <div class="paragraph">
+                <h2>@thing1.Title</h2>
+                <p>@thing1.Content</p>
+
+                <form asp-action="DeleteParagraph">
+                    <input type="hidden" value="@thing1.Id" asp-for="Id" />
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Delete Post" />
+                    </div>
+                </form>
+            </div>
+        }
+        @if (thing.GetType().Equals(typeof(ImageItem)))
+        {
+            var thing1 = (ImageItem)thing;
+            <div class="paragraph">
+                <h2>@thing1.Title</h2>
+                @if (thing1.Image != null)
+                {
+                    var img = String.Format("data:image/gif;base64,{0}", thing1.Image);
+                    <img src="@img" class="ImageItemImage"/>
+                }
+
+                <form asp-action="DeleteImage">
+                    <input type="hidden" value="@thing1.Id" asp-for="Id" />
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Delete Post" />
+                    </div>
+                </form>
+            </div>
+        }
+    }
+
+    @Html.Partial("AddParagraphPartial", new ParagraphItem() { PageId = Model.Id });
+    @Html.Partial("AddImagePartial", new ImageItem() { PageId = Model.Id });
+</div>
